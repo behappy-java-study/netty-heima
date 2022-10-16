@@ -636,7 +636,7 @@ public class HelloWorldClient {
 在发送消息前，先约定用定长字节表示接下来数据的长度
 
 ```java
-// 最大长度，长度偏移，长度占用字节，长度调整，剥离字节数
+// 最大长度，长度偏移(长度从哪个位置开始)，长度内容占用字节，长度调整(比如在内容和长度外还有其他)，剥离字节数(剖出前n个字节内容)
 ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(1024, 0, 1, 0, 1));
 ```
 
