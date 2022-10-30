@@ -1013,7 +1013,7 @@ public class MessageCodec extends ByteToMessageCodec<Message> {
         out.writeByte(msg.getMessageType());
         // 5. 4 个字节
         out.writeInt(msg.getSequenceId());
-        // 无意义，对齐填充
+        // 无意义(一个字节)，对齐填充
         out.writeByte(0xff);
         // 6. 获取内容的字节数组
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

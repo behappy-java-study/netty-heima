@@ -1019,6 +1019,7 @@ new ServerBootstrap()
                 public void channelRead(ChannelHandlerContext ctx, Object msg) {
                     System.out.println(3);
                     ctx.channel().write(msg); // 3
+                    // 这里就不再需要fireChannelRead,因为之后没有入栈处理器了
                 }
             });
             ch.pipeline().addLast(new ChannelOutboundHandlerAdapter(){
@@ -1092,8 +1093,8 @@ new Bootstrap()
   * 如果注释掉 6 处代码，则仅会打印 1 2 3 6
 * ctx.channel().write(msg) vs ctx.write(msg)
   * 都是触发出站处理器的执行
-  * ctx.channel().write(msg) 从尾部开始查找出站处理器
-  * ctx.write(msg) 是从当前节点找上一个出站处理器
+  * ctx.channel().write(msg) 以及 ch.write(msg) 是从尾部开始查找出站处理器(依次从tail -> ... -> head, 如果有出站处理器, 才会做处理)
+  * ctx.write(msg) 是从当前节点找上一个出站处理器(假如当前是h3处理器, 就会依次找h2 -> h1 -> head, 如果有出站处理器, 才会做处理)
   * 3 处的 ctx.channel().write(msg) 如果改为 ctx.write(msg) 仅会打印 1 2 3，因为节点3 之前没有其它出站处理器了
   * 6 处的 ctx.write(msg, promise) 如果改为 ctx.channel().write(msg) 会打印 1 2 3 6 6 6... 因为 ctx.channel().write() 是从尾部开始查找，结果又是节点6 自己
 
