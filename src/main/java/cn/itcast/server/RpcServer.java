@@ -1,7 +1,7 @@
 package cn.itcast.server;
 
 import cn.itcast.protocol.MessageCodecSharable;
-import cn.itcast.protocol.ProcotolFrameDecoder;
+import cn.itcast.protocol.ProtocolFrameDecoder;
 import cn.itcast.server.handler.RpcRequestMessageHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -28,7 +28,7 @@ public class RpcServer {
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new ProcotolFrameDecoder());
+                    ch.pipeline().addLast(new ProtocolFrameDecoder());
                     ch.pipeline().addLast(LOGGING_HANDLER);
                     ch.pipeline().addLast(MESSAGE_CODEC);
                     ch.pipeline().addLast(RPC_HANDLER);

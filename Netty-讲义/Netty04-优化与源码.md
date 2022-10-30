@@ -744,6 +744,7 @@ public class RpcClient {
                     new Class[]{String.class},
                     new Object[]{"张三"}
             )).addListener(promise -> {
+                // 利用addListener异步方法可以进行debug, handler执行完会走此listener
                 if (!promise.isSuccess()) {
                     Throwable cause = promise.cause();
                     log.error("error", cause);

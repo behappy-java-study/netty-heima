@@ -1,4 +1,4 @@
-package cn.itcast.client.handler;
+package cn.itcast.server.handler;
 
 import cn.itcast.message.RpcRequestMessage;
 import cn.itcast.message.RpcResponseMessage;

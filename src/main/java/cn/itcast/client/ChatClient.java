@@ -2,7 +2,7 @@ package cn.itcast.client;
 
 import cn.itcast.message.*;
 import cn.itcast.protocol.MessageCodecSharable;
-import cn.itcast.protocol.ProcotolFrameDecoder;
+import cn.itcast.protocol.ProtocolFrameDecoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -15,7 +15,6 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -40,7 +39,7 @@ public class ChatClient {
             bootstrap.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new ProcotolFrameDecoder());
+                    ch.pipeline().addLast(new ProtocolFrameDecoder());
                     ch.pipeline().addLast(MESSAGE_CODEC);
                     // 用来判断是不是 读空闲时间过长，或 写空闲时间过长
                     // 3s 内如果没有向服务器写数据，会触发一个 IdleState#WRITER_IDLE 事件

@@ -1,14 +1,11 @@
 package cn.itcast.server;
 
-import cn.itcast.message.GroupJoinRequestMessage;
+import cn.itcast.message.PingMessage;
 import cn.itcast.protocol.MessageCodecSharable;
-import cn.itcast.protocol.ProcotolFrameDecoder;
+import cn.itcast.protocol.ProtocolFrameDecoder;
 import cn.itcast.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelDuplexHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -41,7 +38,7 @@ public class ChatServer {
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new ProcotolFrameDecoder());
+                    ch.pipeline().addLast(new ProtocolFrameDecoder());
                     ch.pipeline().addLast(LOGGING_HANDLER);
                     ch.pipeline().addLast(MESSAGE_CODEC);
                     // 用来判断是不是 读空闲时间过长，或 写空闲时间过长
